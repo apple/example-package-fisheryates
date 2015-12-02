@@ -29,7 +29,7 @@ public extension MutableCollectionType where Index == Int {
 
         for i in 0..<count - 1 {
 #if os(Linux)
-            let j = Int(g_random_int_range(0, Int32(count - i))) + i
+            let j = Int(random() % (count - i)) + i
 #else
             let j = Int(arc4random_uniform(UInt32(count - i))) + i
 #endif
