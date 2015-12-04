@@ -15,16 +15,16 @@ import Darwin.C
 #endif
 
 public extension CollectionType {
-    func shuffle() -> [Generator.Element] {
+    func shuffled() -> [Generator.Element] {
         var array = Array(self)
-        array.shuffleInPlace()
+        array.shuffle()
 
         return array
     }
 }
 
 public extension MutableCollectionType where Index == Int {
-    mutating func shuffleInPlace() {
+    mutating func shuffle() {
         guard count > 1 else { return }
 
         for i in 0..<count - 1 {
