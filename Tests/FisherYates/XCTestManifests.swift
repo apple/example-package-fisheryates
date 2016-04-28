@@ -12,8 +12,7 @@ extension FisherYatesShuffleTest{
     
     static var allTests : [(String, FisherYatesShuffleTest -> () throws -> Void)] {
         return [
-                   ("testShuffleInPlace", testShuffleInPlace),
-                   ("testShuffle",testShuffle)
+                   ("testShuffle",testShuffled)
         ]
     }
 }

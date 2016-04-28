@@ -13,21 +13,20 @@ import XCTest
 
 class FisherYatesShuffleTest: XCTestCase {
     
-    func testShuffleInPlace(){
-        let hand1 = [3,4,5,6,7]
-        var hand2 = hand1
-        hand2.shuffleInPlace()
-        XCTAssertNotEqual(hand1, hand2)
-        XCTAssertEqual(hand1.count, hand2.count)
-        XCTAssertEqual(hand1.reduce(0, combine: +), hand2.reduce(0, combine: +))
+    func testShuffled() {
+        var hand1 = [3,4,5,6,7,1,2,8,9,10,11,12,2,3,4,5,6,7,8,9,10,11,12]
+        var count =  0
+        
+        for _ in 0..<1000 {
+            let hand2 = hand1.shuffled()
+            
+            if (hand1 != hand2 && hand1.count == hand2.count &&
+                hand1.reduce(0, combine: +) == hand2.reduce(0, combine: +)) {
+                count += 1
+            }
+            hand1 = hand2
+        }
+        let result = Double(count) / 1000.00
+        XCTAssertEqualWithAccuracy(result, 1, accuracy: 0.02)
     }
-    
-    func testShuffle(){
-        let hand1 = [2,3,4,5,6]
-        let hand2 = hand1.shuffle()
-        XCTAssertNotEqual(hand1, hand2)
-        XCTAssertEqual(hand1.count, hand2.count)
-        XCTAssertEqual(hand1.reduce(0, combine: +), hand2.reduce(0, combine: +))
-    }
-    
 }
