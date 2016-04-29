@@ -23,16 +23,20 @@ public extension Collection {
     }
 }
 
+private func random(max: Int) -> Int {
+#if os(Linux)
+    return Int(random() % max)
+#else
+    return Int(arc4random_uniform(UInt32(max)))
+#endif
+}
+
 public extension MutableCollection where Index == Int, IndexDistance == Int {
     mutating func shuffleInPlace() {
         guard count > 1 else { return }
 
         for i in 0..<count - 1 {
-#if os(Linux)
-            let j = Int(random() % (count - i)) + i
-#else
-            let j = Int(arc4random_uniform(UInt32(count - i))) + i
-#endif
+            let j = random(max: count - i) + i
             guard i != j else { continue }
             swap(&self[i], &self[j])
         }
