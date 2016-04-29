@@ -15,10 +15,9 @@ import Darwin.C
 #endif
 
 public extension Collection {
-    func shuffle() -> [Generator.Element] {
+    func shuffled() -> [Generator.Element] {
         var array = Array(self)
-        array.shuffleInPlace()
-
+        array.shuffle()
         return array
     }
 }
@@ -32,7 +31,7 @@ private func random(max: Int) -> Int {
 }
 
 public extension MutableCollection where Index == Int, IndexDistance == Int {
-    mutating func shuffleInPlace() {
+    mutating func shuffle() {
         guard count > 1 else { return }
 
         for i in 0..<count - 1 {
