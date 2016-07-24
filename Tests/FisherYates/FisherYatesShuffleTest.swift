@@ -21,7 +21,7 @@ class FisherYatesShuffleTest: XCTestCase {
             let hand2 = hand1.shuffled()
             
             if (hand1 != hand2 && hand1.count == hand2.count &&
-                hand1.reduce(0, combine: +) == hand2.reduce(0, combine: +)) {
+                hand1.reduce(0, +) == hand2.reduce(0, +)) {
                 count += 1
             }
             hand1 = hand2
