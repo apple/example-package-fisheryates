@@ -8,11 +8,9 @@
  See http://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-extension FisherYatesShuffleTest{
+extension FisherYatesShuffleTest {
     
-    static var allTests : [(String, FisherYatesShuffleTest -> () throws -> Void)] {
-        return [
-                   ("testShuffle",testShuffled)
-        ]
-    }
+    static var allTests = [
+        ("testShuffle", testShuffled),
+    ]
 }
