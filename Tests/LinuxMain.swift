@@ -11,5 +11,5 @@
 @testable import FisherYatesTestSuite
 import XCTest
 
-XCTMain([testCase(FisherYatesShuffleTest.allTest)
+XCTMain([testCase(FisherYatesShuffleTest.allTests)
         ])
