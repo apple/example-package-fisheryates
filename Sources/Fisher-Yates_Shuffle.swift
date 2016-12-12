@@ -21,7 +21,7 @@
 
 
 public extension Collection {
-    func shuffled() -> [Generator.Element] {
+    func shuffled() -> [Iterator.Element] {
         var array = Array(self)
         array.shuffle()
         return array
