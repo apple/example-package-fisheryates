@@ -36,7 +36,11 @@ public extension MutableCollection where Index == Int, IndexDistance == Int {
         for i in 0..<count - 1 {
             let j = random(count - i) + i
             guard i != j else { continue }
-            swap(&self[i], &self[j])
+            #if swift(>=4.0)
+                swapAt(i, j)
+            #else
+                swap(&self[i], &self[j])
+            #endif
         }
     }
 }
