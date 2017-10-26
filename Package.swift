@@ -1,3 +1,5 @@
+// swift-tools-version:4.0
+
 /*
  This source file is part of the Swift.org open source project
 
@@ -11,5 +13,16 @@
 import PackageDescription
 
 let package = Package(
-    name: "FisherYates"
+    name: "FisherYates",
+    products: [
+        .library(name: "FisherYates", targets: ["FisherYates"]),
+    ],
+    targets: [
+        .target(
+            name: "FisherYates",
+            dependencies: []),
+        .testTarget(
+            name: "FisherYatesTests",
+            dependencies: ["FisherYates"]),
+    ]
 )
