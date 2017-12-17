@@ -45,7 +45,7 @@ public extension Collection {
             guard !isEmpty else { return }
             
             for n in 0 ..< count - 1 {
-                let i = startIndex.advancedBy(
+                let i = startIndex.advancedBy(n)
                 let j = i.advancedBy(random(count - n))
                 
                 guard i != j else { continue }
