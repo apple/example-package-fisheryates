@@ -10,13 +10,7 @@
 
 #if swift(>=2.2) && !swift(>=3.0)
     public typealias Collection = CollectionType
-
-    public protocol MutableCollection: MutableCollectionType {
-        associatedtype IndexDistance
-    }
-    extension Array: MutableCollection {
-        public typealias IndexDistance = Int
-    }
+    public typealias MutableCollection: MutableCollectionType
 #endif
 
 
@@ -28,14 +22,25 @@ public extension Collection {
     }
 }
 
-
-public extension MutableCollection where Index == Int, IndexDistance == Int {
+#if swift(>=3.0)
+public extension MutableCollection where Self: RandomAccessCollection, IndexDistance == Int {
+#else
+public extension MutableCollection where Index: RandomAccessIndexType, Index.Distance == Int {
+#endif
     mutating func shuffle() {
-        guard count > 1 else { return }
+        guard !isEmpty else { return }
 
-        for i in 0..<count - 1 {
-            let j = random(count - i) + i
+        for n in 0 ..< count - 1 {
+            #if swift(>=3.0)
+                let i = index(startIndex, offsetBy: n)
+                let j = index(i, offsetBy: random(count - n))
+            #else
+                let i = startIndex.advancedBy(n)
+                let j = i.advancedBy(random(count - n))
+            #endif
+            
             guard i != j else { continue }
+            
             #if swift(>=4.0)
                 swapAt(i, j)
             #else
