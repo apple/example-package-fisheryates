@@ -18,8 +18,7 @@
     public let random: (Int) -> Int = {
         while true {
             let x = Glibc.random() % $0
-            let y = Glibc.random() % $0
-            guard x == y else { return x }
+            if x < (RAND_MAX - RAND_MAX % Int32($0)) { return x % $0 }
         }
     }
 #endif
