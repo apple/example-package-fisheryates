@@ -21,37 +21,30 @@ public extension Collection {
     }
 }
 
+public extension MutableCollection {
+    mutating func shuffle() {
+        var n = count
+        
+        while n > 1 {
+            #if swift(>=3.0)
+                let i = index(startIndex, offsetBy: count - n)
+                let j = index(i, offsetBy: random(n))
+            #else
+                let i = startIndex.advancedBy(count - n)
+                let j = i.advancedBy(random(n))
+            #endif
+            
+            swapAt(i, j)
+            n -= 1
+        }
+    }
+}
+
 #if !swift(>=4.0)
     private extension MutableCollection {
         mutating func swapAt(_ i: Index, _ j: Index) {
             guard i != j else { return }
             swap(&self[i], &self[j])
-        }
-    }
-#endif
-
-#if swift(>=3.0)
-    public extension MutableCollection where Self: RandomAccessCollection {
-        mutating func shuffle() {
-            var n = count
-            while n > 1 {
-                let i = index(startIndex, offsetBy: count - n)
-                let j = index(i, offsetBy: random(n))
-                swapAt(i, j)
-                n -= 1
-            }
-        }
-    }
-#else
-    public extension MutableCollection where Index: RandomAccessIndexType {
-        mutating func shuffle() {
-            var n = count
-            while n > 1 {
-                let i = startIndex.advancedBy(count - n)
-                let j = i.advancedBy(random(n))
-                swapAt(i, j)
-                n -= 1
-            }
         }
     }
 #endif
