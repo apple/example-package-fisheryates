@@ -8,8 +8,9 @@
  See http://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
  */
 
-@testable import FisherYatesTestSuite
+@testable import FisherYatesTests
 import XCTest
 
-XCTMain([testCase(FisherYatesShuffleTest.allTests)
-        ])
+XCTMain([
+    testCase(FisherYatesShuffleTest.allTests),
+])
