@@ -26,7 +26,7 @@
     import Glibc
 
     public func random<T: RandomInteger> (_ n: T) -> T {
-        guard n > 0 else { return 0 }
+        precondition(n > 0)
      
         let upperLimit = RAND_MAX - RAND_MAX % numericCast(n)
      
