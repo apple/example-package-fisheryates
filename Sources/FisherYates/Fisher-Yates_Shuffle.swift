@@ -24,8 +24,8 @@ public extension MutableCollection {
         while n > 1 {
             let j = index(i, offsetBy: random(n))
             swapAt(i, j)
-            n -= 1
             formIndex(after: &i)
+            n -= 1
         }
     }
 }
