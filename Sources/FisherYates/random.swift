@@ -8,24 +8,16 @@
  See http://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-#if swift(>=4.0)
-    public typealias RandomInteger = BinaryInteger
-#elseif swift(>=3.0)
-    public typealias RandomInteger = IntegerArithmetic
-#else
-    public typealias RandomInteger = IntegerArithmeticType
-#endif
-
-#if os(OSX)
+#if os(macOS)
     import Darwin
 
-    public func random<T: RandomInteger> (_ n: T) -> T {
-        numericCast(arc4random_uniform(numericCast(n)))
+    public func random<T: BinaryInteger> (_ n: T) -> T {
+        numericCast( arc4random_uniform( numericCast(n) ) )
     }
 #else
     import Glibc
 
-    public func random<T: RandomInteger> (_ n: T) -> T {
+    public func random<T: BinaryInteger> (_ n: T) -> T {
         precondition(n > 0)
      
         let upperLimit = RAND_MAX - RAND_MAX % numericCast(n)
