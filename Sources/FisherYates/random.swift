@@ -8,18 +8,23 @@
  See http://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-#if os(OSX)
+#if os(macOS)
     import Darwin
 
-    public let random: (Int) -> Int = { Int(arc4random_uniform(UInt32($0))) }
+    public func random<T: BinaryInteger> (_ n: T) -> T {
+        return numericCast( arc4random_uniform( numericCast(n) ) )
+    }
 #else
     import Glibc
 
-    public let random: (Int) -> Int = {
+    public func random<T: BinaryInteger> (_ n: T) -> T {
+        precondition(n > 0)
+     
+        let upperLimit = RAND_MAX - RAND_MAX % numericCast(n)
+     
         while true {
-            let x = Glibc.random() % $0
-            let y = Glibc.random() % $0
-            guard x == y else { return x }
+            let x = Glibc.random()
+            if x < upperLimit { return numericCast(x) % n }
         }
     }
 #endif
