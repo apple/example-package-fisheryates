@@ -8,10 +8,10 @@
  See http://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-#if swift(>=2.2) && !swift(>=3.0)
+#if !swift(>=3.0)
     public typealias Collection = CollectionType
+    public typealias MutableCollection = MutableCollectionType
 #endif
-
 
 public extension Collection {
     func shuffled() -> [Iterator.Element] {
@@ -21,35 +21,36 @@ public extension Collection {
     }
 }
 
+#if !swift(>=4.0)
+    private extension MutableCollection {
+        mutating func swapAt(_ i: Index, _ j: Index) {
+            guard i != j else { return }
+            swap(&self[i], &self[j])
+        }
+    }
+#endif
+
 #if swift(>=3.0)
-    public extension MutableCollection where Self: RandomAccessCollection, IndexDistance == Int {
+    public extension MutableCollection where Self: RandomAccessCollection {
         mutating func shuffle() {
-            guard !isEmpty else { return }
-            
-            for n in 0 ..< count - 1 {
-                let i = index(startIndex, offsetBy: n)
-                let j = index(i, offsetBy: random(count - n))
-                
-                guard i != j else { continue }
-                #if swift(>=4.0)
-                    swapAt(i, j)
-                #else
-                    swap(&self[i], &self[j])
-                #endif
+            var n = count
+            while n > 1 {
+                let i = index(startIndex, offsetBy: count - n)
+                let j = index(i, offsetBy: random(n))
+                swapAt(i, j)
+                n -= 1
             }
         }
     }
 #else
-    public extension MutableCollectionType where Index: RandomAccessIndexType, Index.Distance == Int {
+    public extension MutableCollection where Index: RandomAccessIndexType {
         mutating func shuffle() {
-            guard !isEmpty else { return }
-            
-            for n in 0 ..< count - 1 {
-                let i = startIndex.advancedBy(n)
-                let j = i.advancedBy(random(count - n))
-                
-                guard i != j else { continue }
-                swap(&self[i], &self[j])
+            var n = count
+            while n > 1 {
+                let i = startIndex.advancedBy(count - n)
+                let j = i.advancedBy(random(n))
+                swapAt(i, j)
+                n -= 1
             }
         }
     }
