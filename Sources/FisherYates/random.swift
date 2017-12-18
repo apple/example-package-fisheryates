@@ -19,17 +19,17 @@
 #if os(OSX)
     import Darwin
 
-    public let random<T: RandomInteger>: (T) -> T = {
-        numericCast(arc4random_uniform(numericCast($0)))
+    public func random<T: RandomInteger> (_ n: T) -> T {
+        numericCast(arc4random_uniform(numericCast(n)))
     }
 #else
     import Glibc
 
-    public let random<T: RandomInteger>: (T) -> T = {
-        let upperLimit = RAND_MAX - RAND_MAX % numericCast($0)
+    public func random<T: RandomInteger> (_ n: T) -> T {
+        let upperLimit = RAND_MAX - RAND_MAX % numericCast(n)
         while true {
             let x = Glibc.random()
-            if x < upperLimit { return numericCast(x) % $0 }
+            if x < upperLimit { return numericCast(x) % n }
         }
     }
 #endif
