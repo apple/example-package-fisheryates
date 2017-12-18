@@ -8,12 +8,12 @@
  See http://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-#if swift(<=3.0)
-    public typealias RandomInteger = IntegerArithmeticType
-#elseif swift(<=3.1)
+#if swift(>=4.0)
+    public typealias RandomInteger = BinaryInteger
+#elseif swift(>=3.0)
     public typealias RandomInteger = IntegerArithmetic
 #else
-    public typealias RandomInteger = BinaryInteger
+    public typealias RandomInteger = IntegerArithmeticType
 #endif
 
 #if os(OSX)
