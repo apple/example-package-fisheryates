@@ -29,4 +29,8 @@ class FisherYatesShuffleTest: XCTestCase {
         let result = Double(count) / 1000.00
         XCTAssertEqual(result, 1, accuracy: 0.02)
     }
+
+    static var allTests = [
+        ("testShuffle", testShuffled),
+    ]
 }

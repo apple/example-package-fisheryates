@@ -8,9 +8,12 @@
  See http://swift.org/CONTRIBUTORS.txt for Swift project authors
 */
 
-extension FisherYatesShuffleTest {
-    
-    static var allTests = [
-        ("testShuffle", testShuffled),
+import XCTest
+
+#if !os(macOS)
+public func allTests() -> [XCTestCaseEntry] {
+    return [
+        testCase(FisherYatesShuffleTest.allTests),
     ]
 }
+#endif
