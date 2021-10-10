@@ -30,6 +30,21 @@ public func random<T: BinaryInteger> (_ n: T) -> T {
   }
 }
 
+#elseif canImport(WASILibc)
+
+import WASILibc
+
+public func random<T: BinaryInteger> (_ n: T) -> T {
+  precondition(n > 0)
+
+  let upperLimit = RAND_MAX - RAND_MAX % numericCast(n)
+
+  while true {
+    let x = WASILibc.random()
+    if x < upperLimit { return numericCast(x) % n }
+  }
+}
+
 #else
 #error("unsupported platform")
 #endif
